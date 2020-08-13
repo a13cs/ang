@@ -1,0 +1,99 @@
+<!-- <div class="navbar navbar-default">
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <a class="navbar-brand" >ngEvents</a>
+      </div>
+  
+       <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a >All Events</a>
+          </li>
+          <li><a href="">Create Event</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+              Events
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li >
+                <a href="">Angular Connect</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="navbar-header navbar-right">
+          <ul class="nav navbar-nav">
+            <li>
+              <a>Welcome John</a>
+            </li>
+          </ul>
+        </div>
+        <form id="searchForm"  class="navbar-form navbar-right"  >
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search Sessions" >
+          </div>
+          <button class="btn btn-default" >
+            Search
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+   -->
+
+
+<!-- <mat-sidenav-container>
+  <section>Main</section>
+  <mat-sidenav position="start">one</mat-sidenav>
+  <mat-sidenav position="end">two</mat-sidenav>
+</mat-sidenav-container> -->
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ngEvents</a>
+    </div>
+
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a [routerLink]="['/events']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Events</a>
+        </li>
+        <li>
+          <a [routerLink]="['/events/new']" routerLinkActive="active">Create Event</a>
+        </li>
+        <li>
+          <a [routerLink]="['/events/session/new']" routerLinkActive="active">Create Event Session</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toogle" data-toogle="dropdown">Events<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li >
+              <a href="">Angular Connect</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="navbar-header navbar-right">
+        <ul class="nav navbar-nav">
+          <li>
+            <a [routerLink]="['/user/login']" *ngIf="!authService.isAuthenticated()">Login</a>
+            <a [routerLink]="['/user/profile']" *ngIf="authService.isAuthenticated()">Welcome {{authService.currentUser.firstName}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <form id="searchForm"  class="navbar-form navbar-right"  >
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search Sessions" >
+        </div>
+        <button class="btn btn-default" >
+          Search
+        </button>
+      </form>
+
+  </div>
+</nav>

@@ -1,0 +1,38 @@
+<h1>Login</h1>
+<hr>
+<div class="col-md-4">
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off" novalidate>
+
+    <div class="form-group" >
+      <label for="userName">User Name:</label> 
+      <em *ngIf="loginForm.controls.userName?.invalid && (loginForm.controls.userName?.touched || mouseoverLogin)">Required</em>
+      <input (ngModel)="username" name="userName" id="userName" required type="text" class="form-control" placeholder="User Name..." />
+    </div>
+
+    <div class="form-group" >
+      <label for="password">Password:</label>
+      <em *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.touched || mouseoverLogin)">Required</em>
+      <input (ngModel)="password" name="password" id="password" required type="password" class="form-control" placeholder="Password..." />
+    </div>
+        
+    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false">
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+    </span>
+    <button type="button" (click)="cancel()" class="btn btn-default">Cancel</button>
+  </form>
+</div>
+
+
+<div>
+    loginForm.valid: {{loginForm.valid}}<br>
+    loginForm.submitted: {{loginForm.submitted}}<br>
+
+
+    <!-- loginForm.controls.userName.valid: {{loginForm.controls.userName.valid}}<br>
+    loginForm.controls.userName.invalid: {{loginForm.controls.userName.invalid}}<br>
+    loginForm.controls.userName.dirty: {{loginForm.controls.userName.dirty}}<br>
+    loginForm.controls.userName.pristine: {{loginForm.controls.userName.pristine}}<br>
+    loginForm.controls.userName.touched: {{loginForm.controls.userName.touched}}<br>
+    loginForm.controls.userName.untouched: {{loginForm.controls.userName.untouched}}<br> -->
+    
+</div>

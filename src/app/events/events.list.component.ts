@@ -1,24 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Data } from '../data/event.data';
+import { EventsService } from './shared/event.service';
+import { ToastrService } from '../common/toastr.service';
+import { ActivatedRoute } from '@angular/router';
+import { IEvent } from './shared';
+
 
 @Component({
-    selector: 'events-list',
-    templateUrl: './events.list.component.html'
+    templateUrl: './events.list.component.html',
+    styles: [`
+    .well h3 {color: blue}
+    .boxx {background-color: lavender}
+    `]
 })
-export class EventsListComponent {
+export class EventsListComponent implements OnInit {
 
     title = 'app';
-    event1 =    {
-        id: 1,
-        name: 'Angular Connect',
-        date: '9/26/2036',
-        time: '10:00 am',
-        price: 599.99,
-        imageUrl: '/assets/images/angularconnect-shield.png',
-        location: {
-          address: '1057 DT',
-          city: 'London',
-          country: 'England'
-        }
+    events: IEvent[];
+
+    constructor(
+        private eventsService: EventsService, 
+        private toastrService: ToastrService, 
+        private route: ActivatedRoute) {}
+    
+    ngOnInit(): void {
+        this.events = this.route.snapshot.data['events'];
+        // this.eventsService.getEvents().subscribe(
+        //     data => this.events = data
+        // );
+    }
+    
+    handleThumbnailClick(eventName: string) {
+        this.toastrService.success('',eventName)
     }
 
     handleEventClicked(event: string) {
