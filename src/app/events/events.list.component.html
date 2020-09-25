@@ -4,7 +4,8 @@
     <hr>
     <div class="row">
         <div *ngFor='let ev of events' class="col-md-5 boxx">
-            <event-thumbnail  [event]='ev' (eventClick)='handleEventClicked($event)' (click)="handleThumbnailClick(ev.name)"></event-thumbnail>
+            <event-thumbnail  [event]='ev' ></event-thumbnail>
+            <!-- (eventClick)='handleEventClicked($event)' (click)="handleThumbnailClick(ev.name)" -->
         </div>
     </div>
     <!-- <event-thumbnail #thumbnail  [event]='ev' (eventClick)='handleEventClicked($event)'></event-thumbnail>

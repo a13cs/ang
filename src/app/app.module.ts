@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
@@ -11,19 +12,29 @@ import {
   EventThumbnailComponent,
   CreateEventComponent,
   EventsService,
-  EventRouteActivator,
+  // EventRouteActivator,
+  EventResolver,
   EventsListResolver,
-  SessionListComponent
+  SessionListComponent,
+  DurationPipe,
+  VoterService,
+  LocationValidator
  } from './events/index';
 
+import { TOASTR_TOKEN, Toastr, JQ_TOKEN , CollapsibleWellComponent, SimpleModalComponent, ModalTriggerDirective} from './common/index';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav/navbar.components';
-import { ToastrService } from './common/toastr.service';
 import { appRoutes } from './routes';
 import { UserModule } from './user/user.module';
 import { AuthService } from './user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateSessionComponent } from './events/event.details/create.session.component';
+import { UpvoteComponent } from './events/event.details/upvote.component';
+
+
+// declare let toastr:Toastr
+let toastr: Toastr = window['toastr'];
+let jQuery = window['$']
 
 @NgModule({
   declarations: [
@@ -34,7 +45,13 @@ import { CreateSessionComponent } from './events/event.details/create.session.co
     EventDetailsComponent, 
     CreateEventComponent, 
     CreateSessionComponent,
-    SessionListComponent
+    SessionListComponent,
+    CollapsibleWellComponent,
+    SimpleModalComponent,
+    ModalTriggerDirective,
+    UpvoteComponent,
+    DurationPipe,
+    LocationValidator
   ],
   imports: [
     BrowserModule,
@@ -43,10 +60,13 @@ import { CreateSessionComponent } from './events/event.details/create.session.co
     ReactiveFormsModule,
     NoopAnimationsModule,
     UserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [EventsService, ToastrService, EventRouteActivator, EventsListResolver, AuthService,
-  {provide: 'canDeactivateCreateEvent', useValue: checkDirtyState}
+  providers: [EventsService, EventResolver, EventsListResolver, AuthService, VoterService,
+  {provide: 'canDeactivateCreateEvent', useValue: checkDirtyState},
+  {provide: TOASTR_TOKEN, useValue: toastr},
+  {provide: JQ_TOKEN, useValue: jQuery}
   ],
   bootstrap: [AppComponent]
 })

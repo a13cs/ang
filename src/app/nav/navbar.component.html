@@ -64,9 +64,9 @@
         <li>
           <a [routerLink]="['/events/new']" routerLinkActive="active">Create Event</a>
         </li>
-        <li>
+        <!-- <li>
           <a [routerLink]="['/events/session/new']" routerLinkActive="active">Create Event Session</a>
-        </li>
+        </li> -->
         <li class="dropdown">
           <a href="#" class="dropdown-toogle" data-toogle="dropdown">Events<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -86,14 +86,26 @@
         </ul>
       </div>
 
-      <form id="searchForm"  class="navbar-form navbar-right"  >
+      <form id="searchForm" (ngSubmit)="searchSessions(searchTerm)" class="navbar-form navbar-right"  >
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search Sessions" >
+          <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Search Sessions" >
         </div>
-        <button class="btn btn-default" >
+        <button class="btn btn-default" modal-trigger="searchResults">
           Search
         </button>
       </form>
 
   </div>
 </nav>
+
+<simple-modal closeOnBodyClick="true" elementId="searchResults" title="Matching Sessions">
+  <div class="list-group" >
+    <ul>
+      <li *ngFor="let session of foundSessions">
+        <a class="list-grop-item"  [routerLink]="['/events', session.eventId]">
+          {{session.name}}, Event {{session.eventId}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</simple-modal>

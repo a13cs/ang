@@ -11,7 +11,7 @@
         <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
         <span *ngSwitchDefault>(Normal Start)</span>
     </div>
-    <div>Price: ${{event?.price}}</div>
+    <div>Price: {{event?.price | currency:'USD'}}</div>
     <div [hidden]='!event?.location'>
         <span>Location: {{event.location?.address}}</span>
         <!-- <span>&nbsp;</span> -->

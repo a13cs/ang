@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { Toastr, TOASTR_TOKEN } from '../common/toastr.service';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -14,7 +15,11 @@ export class ProfileComponent implements OnInit {
 
   profileForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+      private authService: AuthService, 
+      private router: Router,
+      @Inject(TOASTR_TOKEN) private toastr: Toastr
+    ) {}
 
   ngOnInit(): void {
     this.firstName = new FormControl(this.authService.currentUser.firstName, [Validators.required, Validators.pattern('[a-zA-Z].*') ]); // Validators.minLength...
@@ -33,10 +38,19 @@ export class ProfileComponent implements OnInit {
   saveProfile(formValues) {
     console.log(formValues.firstName + ' ' + formValues.lastName)
     if(this.profileForm.valid) {
-      this.authService.updateCurrentUser(formValues.firstName, formValues.lastName)
-
-      this.router.navigate(['events'])
+      this.authService.updateCurrentUser(formValues.firstName, formValues.lastName).subscribe(
+        () => {
+          this.toastr.success('Profile Saved')
+          // this.router.navigate(['events'])
+        })
     }
+  }
+  logout() {
+    this.authService.logout().subscribe(
+      () => {
+        this.authService.currentUser = undefined;
+        this.router.navigate['/user/login']
+      })
   }
 
   validateLastName(): boolean {
