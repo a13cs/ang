@@ -1,42 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
+import {Component} from "@angular/core";
+import {NgForm} from "@angular/forms";
+import {AuthService} from "./auth.service";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styles: [`
-    em {float: right ; color: red; padding-left: 10px; }
-  `]
+ templateUrl: './login.component.html',
+  styles: [
+    `
+        em {
+          color: #bd362f;
+        }
+    `
+  ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  userName: any;
+  password: any;
+  mouseoverLogin: boolean;
 
-  username: string;
-  password: string;
-
-  loginInvalid = false;
-
-  mouseoverLogin;
-
-  constructor(private authService: AuthService, private router: Router) { }
-
-  ngOnInit(): void {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
-  login(formValues) {
-    this.authService.loginUser(formValues.userName, formValues.password).subscribe(resp => {
-      if(!resp) {
-        this.loginInvalid = true;
-      } else {
-        this.router.navigate(['events'])
-      }
-    })
-
-    console.log(formValues)
+  login(loginForm: NgForm) {
+    console.log(loginForm)
+    this.authService.loginUser(loginForm.form.value['userName'], loginForm.form.value['password'])
+    if (this.authService.isAuthenticated()) this.router.navigate(['/events'])
   }
 
   cancel() {
-    this.router.navigate(['events'])
+    this.router.navigate(['/events'])
   }
 
 }
